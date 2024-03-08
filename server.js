@@ -19,7 +19,7 @@ const PORT = 5500;
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-app.listen(PORT, 'localhost', (error) => {
+app.listen(PORT, (error) => {
     error ? console.log(error) : console.log(`listening port ${PORT}`)
 });
 
