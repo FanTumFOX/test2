@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+
+    <nav>
+        <%- include('../partials/nav');%>
+    </nav>
+
+    <div class="sidebar">
+        <%- include('../partials/sidebar');%>
+    </div>
+
+    <main>
+        <div class="description header">
+            <div class="title-img">
+                <img src="https://leonardo.osnova.io/8140c8a1-2577-5620-bd66-adb7e6c414bc/-/scale_crop/800x/" alt="">
+            </div>
+            <div class="title-text">
+                <h2>Lists</h2>
+                <p class="description_info">
+                    <%= content.length%> Постов
+                </p>
+                <p>
+                    Добро пожаловать на сайт, посвященный разработке базы данных для птицефабрики! Здесь мы занимаемся
+                    созданием
+                    инновационных решений в области управления и оптимизации производства птицы. Наша команда
+                    специалистов по
+                    базам данных предоставляет высокотехнологичные решения, направленные на повышение эффективности и
+                    улучшение
+                    управления всеми аспектами вашего птицеводческого предприятия.
+                </p>
+            </div>
+        </div>
+        <%- include('../partials/posts');%>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+    <script>
+        window.addEventListener('click', function (event) {
+            if (event.target.className.animVal == "chevron-up" || event.target.className.animVal == "chevron-down") {
+                const action = event.target.className.animVal;
+                // console.log(action);
+                const postId = event.target.closest('.feed').dataset.postId;
+                // console.log(postId);
+                vote(postId, action);
+                let rate = event.target.closest('.feed').querySelector('.rate_score');
+                checkColor(rate);
+            }
+        });
+        function checkColor(rate) {
+            if (rate.innerHTML >= 0 && rate.className.match('negative') && !rate.className.match('positive')) {
+                rate.classList.remove('negative');
+                rate.classList.toggle('positive');
+            } else if (rate.innerHTML < 0 && !rate.className.match('negative') && rate.className.match('positive')) {
+                rate.classList.remove('positive');
+                rate.classList.toggle('negative');
+            }
+        };
+    </script>
+    <script>
+        // Раскрытие поп-ап меню
+        window.addEventListener('click', function (event) {
+            if (event.target.className.animVal == 'icon_button') {
+                event.target.closest('.feed').querySelector('.popup').classList.toggle('show');
+            } else if (event.target.className.animVal !== 'icon_button') {
+                const popups = document.getElementsByClassName('popup');
+                for (let i = 0; i < popups.length; i++) {
+                    if (popups[i].classList.contains('show')) {
+                        popups[i].classList.remove('show');
+                    }
+                }
+            }
+        })
+    </script>
+    <!-- Действия с постом из поп-ап меню -->
+    <%- include('../partials/postScript');%>
+</body>
+
+</html>

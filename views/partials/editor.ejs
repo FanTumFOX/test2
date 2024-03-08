@@ -1,0 +1,99 @@
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+<script type="module">
+    const editor = new EditorJS({
+        /**
+         * Id of Element that should contain the Editor
+         */
+        holder: 'editorjs',
+        placeholder: 'Текст',
+
+        /**
+         * Available Tools list.
+         * Pass Tool's class or Settings object for each Tool you want to use
+         */
+        tools: {
+            header: Header,
+            list: List,
+            quote: {
+                class: Quote,
+                inlineToolbar: true,
+                shortcut: 'CMD+SHIFT+O',
+                config: {
+                    quotePlaceholder: 'Enter a quote',
+                    captionPlaceholder: 'Quote\'s author',
+                },
+            },
+        },
+    });
+
+    window.addEventListener('click', function (event) {
+
+        if (event.target.className === "new_post") {
+            editor.save().then((textData) => {
+
+                const data = {
+                    title: document.querySelector('#title').value,
+                    description: textData.blocks[0].data.text.split(' ').slice(0, 20).join(' '),
+                    imgSrc: document.querySelector('#img').value,
+                    text: textData,
+                };
+                // console.log(JSON.stringify(data));
+
+                return fetch(`/add-post`, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        // console.log('Response status:', response.status);
+                    })
+
+                // window.location.replace('/');
+                // console.log(typeof (textData), JSON.stringify(textData));
+            })
+            // .catch((error) => {
+            //     console.log('Saving failed: ', error);
+            //     alert('Ошибка при сохранении поста');
+            // });
+            window.location.replace('/home');
+        }
+
+        if (event.target.className === "new_post edit") {
+            editor.save().then((textData) => {
+
+                const data = {
+                    id: document.querySelector('.editor').dataset.postId,
+                    title: document.querySelector('#title').value,
+                    description: textData.blocks[0].data.text.split(' ').slice(0, 20).join(' '),
+                    imgSrc: document.querySelector('#img').value,
+                    text: textData,
+                };
+
+                return fetch(`/edit-post`, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => {
+                    })
+
+            })
+
+            window.location.replace('/home');
+        }
+    });
+
+    const inputData = JSON.parse(document.querySelector('#editorjs').dataset.set);
+    if (inputData) {
+        editor.isReady.then(() => {
+            editor.render(inputData);
+        })
+    }
+</script>

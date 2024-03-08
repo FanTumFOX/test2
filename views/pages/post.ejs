@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+
+    <nav>
+        <%- include('../partials/nav');%>
+    </nav>
+
+    <div class="sidebar">
+        <%- include('../partials/sidebar');%>
+    </div>
+
+    <main>
+        <div class="description" data-post-id=<%=content[0].id%>>
+            <div class="edit_block">
+                <div class="category">
+                    <img src="https://leonardo.osnova.io/8140c8a1-2577-5620-bd66-adb7e6c414bc/-/scale_crop/72x72/"
+                        alt="">
+                    <div class="category_name">
+                        <%=content[0].location[0].toUpperCase() + content[0].location.slice(1);%>
+                    </div>
+                    <div class="category_details">Вчера</div>
+                </div>
+                <div class="edit_block_button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="icon_button" viewBox="0 0 16 16">
+                        <path
+                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                    </svg>
+                </div>
+
+                <div class="popup">
+                    <div class="popup_menu">
+                        <div class="popup_menu_option">
+                            <div class="popup_menu_option_label"
+                                onclick="location.href='/edit-post/<%=content[0].id%>';">
+                                Редактировать
+                            </div>
+                        </div>
+                        <div class="popup_menu_option">
+                            <div class="popup_menu_option_label">Скрыть</div>
+                        </div>
+                        <div class="popup_menu_option">
+                            <div class="popup_menu_option_label">Удалить</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="title-img">
+                <img src="https://leonardo.osnova.io/e9b1187d-f332-5e02-9df9-a768fcfe3a7e/-/scale_crop/800x/" alt="">
+            </div> -->
+            <h2>
+                <%= content[0].title%>
+            </h2>
+            <img src="<%= content[0].imgSrc%>" alt="">
+            <!-- <p class="description_info">
+                    <%= content[0].length%> Постов
+                </p> -->
+            <!-- <p class="post_text">
+                <%= content[0].text%>
+            </p> -->
+            <div class="post_text" data-set="<%= content[0].text%>"></div>
+            <div class="rate_section">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="chevron-up"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
+                </svg>
+                <span class="rate_score
+<%_ let votes = content[0].upvotes - content[0].downvotes; _%>
+<%_if ((votes) >= 0) { _%>
+    <%=" positive"%>
+                    <%_}_%>
+                        <%_ if ((votes) < 0) {_%>
+                            <%=" negative" %>
+                                <%_}_%>">
+                                    <%= content[0].upvotes - content[0].downvotes%>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="chevron-down"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                </svg>
+                <div class="space"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="eye"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                </svg>
+                <span class="view_counter">
+                    <%= content[0].view_count%>
+                </span>
+            </div>
+        </div>
+
+        <%- include('../partials/comments'); %>
+
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+    <script>
+        window.addEventListener('click', function (event) {
+            if (event.target.className.animVal == "chevron-up" || event.target.className.animVal == "chevron-down") {
+                const action = event.target.className.animVal;
+                // console.log(action);
+                const postId = event.target.closest('.feed').dataset.postId;
+                // console.log(postId);
+                vote(postId, action);
+                let rate = event.target.closest('.feed').querySelector('.rate_score');
+                checkColor(rate);
+            }
+        });
+        function checkColor(rate) {
+            if (rate.innerHTML >= 0 && rate.className.match('negative') && !rate.className.match('positive')) {
+                rate.classList.remove('negative');
+                rate.classList.toggle('positive');
+            } else if (rate.innerHTML < 0 && !rate.className.match('negative') && rate.className.match('positive')) {
+                rate.classList.remove('positive');
+                rate.classList.toggle('negative');
+            }
+        };
+    </script>
+    <script>
+        window.addEventListener('click', function (event) {
+
+            // Раскрытие поп-ап меню
+            if (event.target.className.animVal == 'icon_button') {
+                event.target.closest('.description').querySelector('.popup').classList.toggle('show');
+            } else if (event.target.className.animVal !== 'icon_button') {
+                const popups = document.getElementsByClassName('popup');
+                for (let i = 0; i < popups.length; i++) {
+                    if (popups[i].classList.contains('show')) {
+                        popups[i].classList.remove('show');
+                    }
+                }
+            }
+
+            if (event.target.className == "popup_menu_option_label") {
+
+                // Редактирование поста, вызванное из поп-ап меню
+                if (event.target.innerHTML.match('Редактировать')) {
+                    const id = event.target.closest('.description').dataset.postId;
+                    fetch(`/edit-post/${id}`, {
+                        method: 'GET',
+                    });
+                }
+
+                // Удаление поста, вызванное из поп-ап меню
+                if (event.target.innerHTML.match('Удалить')) {
+                    const id = event.target.closest('.description').dataset.postId;
+                    fetch(`/delete-post/${id}`, {
+                        method: 'DELETE',
+                    });
+                    window.location.replace('/home');
+                }
+
+                // Скрытие поста, вызванное из поп-ап меню
+                if (event.target.innerHTML.match('Скрыть')) {
+                    const id = event.target.closest('.description').dataset.postId;
+                    fetch(`/change-visibility/${id}`, {
+                        method: 'POST',
+                    });
+                    window.location.replace('/home');
+                }
+            }
+
+            // Изменение рейтинга поста
+            if (event.target.className.animVal == "chevron-up" || event.target.className.animVal == "chevron-down") {
+                const action = event.target.className.animVal;
+                const id = event.target.closest('.description').dataset.postId;
+                fetch(`/vote/${id}/${action}`, {
+                    method: 'POST',
+                });
+                let rate = event.target.closest('.description').querySelector('.rate_score');
+                if (action == "chevron-up") {
+                    rate.innerHTML++;
+                }
+                if (action == "chevron-down") {
+                    rate.innerHTML--;
+                }
+                checkColor(rate);
+            }
+
+            function checkColor(rate) {
+                if (rate.innerHTML >= 0 && rate.className.match('negative') && !rate.className.match('positive')) {
+                    rate.classList.remove('negative');
+                    rate.classList.toggle('positive');
+                } else if (rate.innerHTML < 0 && !rate.className.match('negative') && rate.className.match('positive')) {
+                    rate.classList.remove('positive');
+                    rate.classList.toggle('negative');
+                }
+            };
+        })
+
+        // Счетчик просмотров поста
+        window.addEventListener('load', function (event) {
+            const id = event.target.querySelector('.description').dataset.postId;
+            fetch(`/view-count/${id}`, {
+                method: 'POST'
+            });
+        })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-html@3.4.0/build/edjsHTML.js"></script>
+    <script type="module">
+        const edjsParser = edjsHTML();
+        const HTML = edjsParser.parse(JSON.parse(document.querySelector('.post_text').dataset.set));
+        // returns array of html strings per block
+        // console.log(HTML);
+        document.querySelector('.post_text').innerHTML = HTML.reduce((a, c) => a + c, '');
+    </script>
+</body>
+
+</html>

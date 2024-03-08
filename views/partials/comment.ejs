@@ -1,0 +1,33 @@
+<div class="comment_content">
+    <div class="author_block">
+        <div class="author">
+            <img src="https://leonardo.osnova.io/8140c8a1-2577-5620-bd66-adb7e6c414bc/-/scale_crop/72x72/" alt="">
+            <div class="author_name">Администратор</div>
+            <div class="author_details">Вчера</div>
+        </div>
+    </div>
+    Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел,
+    ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол Чел, ну ты и лол. Сам ты лол
+    <div class="rate_section">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="chevron-up"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
+        </svg>
+        <span class="rate_score
+<%_ let votes = content[0].upvotes - content[0].downvotes; _%>
+<%_if ((votes) >= 0) { _%>
+<%=" positive"%>
+            <%_}_%>
+                <%_ if ((votes) < 0) {_%>
+                    <%=" negative" %>
+                        <%_}_%>">
+                            <%= content[0].upvotes - content[0].downvotes%>
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="chevron-down"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+        </svg>
+    </div>
+</div>

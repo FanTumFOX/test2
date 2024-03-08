@@ -1,0 +1,68 @@
+<script>
+    window.addEventListener('click', function (event) {
+        if (event.target.className == "popup_menu_option_label") {
+
+            // Редактирование поста, вызванное из поп-ап меню
+            if (event.target.innerHTML.match('Редактировать')) {
+                const id = event.target.closest('.feed').dataset.postId;
+                fetch(`/edit-post/${id}`, {
+                    method: 'GET',
+                });
+            }
+
+            // Удаление поста, вызванное из поп-ап меню
+            if (event.target.innerHTML.match('Удалить')) {
+                const id = event.target.closest('.feed').dataset.postId;
+                fetch(`/delete-post/${id}`, {
+                    method: 'DELETE',
+                });
+                this.location.reload();
+            }
+
+            // Скрытие поста, вызванное из поп-ап меню
+            if (event.target.innerHTML.match('Скрыть')) {
+                const id = event.target.closest('.feed').dataset.postId;
+                fetch(`/change-visibility/${id}`, {
+                    method: 'POST',
+                });
+                this.location.reload();
+            }
+        }
+
+        // Показ скрытого поста, вызванное из блока со скрытым постом
+        if (event.target.className == "changeVisibility") {
+            const id = event.target.closest('.feed').dataset.postId;
+            fetch(`/change-visibility/${id}`, {
+                method: 'POST',
+            });
+            this.location.reload();
+        }
+
+        // Изменение рейтинга поста
+        if (event.target.className.animVal == "chevron-up" || event.target.className.animVal == "chevron-down") {
+            const action = event.target.className.animVal;
+            const id = event.target.closest('.feed').dataset.postId;
+            fetch(`/vote/${id}/${action}`, {
+                method: 'POST',
+            });
+            let rate = event.target.closest('.feed').querySelector('.rate_score');
+            if (action == "chevron-up") {
+                rate.innerHTML++;
+            }
+            if (action == "chevron-down") {
+                rate.innerHTML--;
+            }
+            checkColor(rate);
+        }
+
+        function checkColor(rate) {
+            if (rate.innerHTML >= 0 && rate.className.match('negative') && !rate.className.match('positive')) {
+                rate.classList.remove('negative');
+                rate.classList.toggle('positive');
+            } else if (rate.innerHTML < 0 && !rate.className.match('negative') && rate.className.match('positive')) {
+                rate.classList.remove('positive');
+                rate.classList.toggle('negative');
+            }
+        };
+    });
+</script>

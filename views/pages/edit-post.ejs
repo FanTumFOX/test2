@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+
+    <main>
+        <a href="javascript:history.back()" class="back_link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="cross"
+                viewBox="0 0 16 16">
+                <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+            </svg>
+        </a>
+
+        <div class="editor" data-post-id=<%=content[0].id%>>
+            <form class="post_label">
+                <input type="text" id="title" placeholder="Заголовок" value="<%=content[0].title%>" autocomplete="off">
+            </form>
+            <form class="post_content">
+                <textarea id="img" placeholder="Место для изображения"><%=content[0].imgSrc%></textarea>
+            </form>
+
+            <div id="editorjs" data-set='<%=content[0].text%>'></div>
+        </div>
+        <div class="post_bar">
+            <!-- <form method="post" action="/add-post"> -->
+            <button class="new_post edit">
+                Редактировать
+            </button>
+            <!-- </form> -->
+        </div>
+    </main>
+
+    <%- include('../partials/editor'); %>
+</body>
+
+</html>
