@@ -372,7 +372,7 @@ a.content_link:before {
 
 .title-img {
     aspect-ratio: 640 / 200;
-    width: 718px;
+    /* width: 718px; */
     /* height: 200px; */
 }
 
