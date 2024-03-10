@@ -32,7 +32,7 @@ const getPost = (req, res) => {
         const title = `Lists | ${content[0].title}`;
         res.render(createPath('./pages/post'), { title, memes, content });
     } catch (error) {
-        // handleError(res, error);
+        handleError(res, error);
     }
 }
 

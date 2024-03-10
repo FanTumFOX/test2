@@ -3,7 +3,7 @@ const getData = require('../helpers/get-data');
 
 const handleError = (res, error) => {
     console.log(error);
-    res.render(createPath('error'), { title: 'Error' });
+    res.render(createPath('./pages/error'), { title: 'Error' });
 }
 
 const getAnalytics = (req, res) => {
