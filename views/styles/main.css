@@ -323,6 +323,28 @@ main {
     align-items: center;
 }
 
+.subsite_button {
+    width: 90px;
+    margin-left: auto;
+    padding-left: 10px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.subsite_button a {
+    color: #424243;
+    cursor: pointer;
+    display: grid;
+    margin: 0px 0px 4px;
+    padding: 3px 10px;
+}
+
+.subsite_button a:hover {
+    background-color: #fff;
+    border-radius: 6px;
+}
+
 .icon_button {
     padding: 4px;
     border-radius: 100%;

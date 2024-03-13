@@ -109,28 +109,6 @@
 
     <script>
         window.addEventListener('click', function (event) {
-            if (event.target.className.animVal == "chevron-up" || event.target.className.animVal == "chevron-down") {
-                const action = event.target.className.animVal;
-                // console.log(action);
-                const postId = event.target.closest('.feed').dataset.postId;
-                // console.log(postId);
-                vote(postId, action);
-                let rate = event.target.closest('.feed').querySelector('.rate_score');
-                checkColor(rate);
-            }
-        });
-        function checkColor(rate) {
-            if (rate.innerHTML >= 0 && rate.className.match('negative') && !rate.className.match('positive')) {
-                rate.classList.remove('negative');
-                rate.classList.toggle('positive');
-            } else if (rate.innerHTML < 0 && !rate.className.match('negative') && rate.className.match('positive')) {
-                rate.classList.remove('positive');
-                rate.classList.toggle('negative');
-            }
-        };
-    </script>
-    <script>
-        window.addEventListener('click', function (event) {
 
             // Раскрытие поп-ап меню
             if (event.target.className.animVal == 'icon_button') {

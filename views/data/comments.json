@@ -4,16 +4,16 @@
         "postId": 1,
         "userId": 2,
         "time": "",
-        "text": "",
+        "text": "Боже, что за пост",
         "upvotes": 0,
         "downvotes": 0
     },
     {
         "id": 2,
-        "postId": 1,
+        "postId": 2,
         "userId": 2,
         "time": "",
-        "text": "",
+        "text": "Hello everyone, how are you?",
         "upvotes": 0,
         "downvotes": 0
     }

@@ -28,9 +28,11 @@ const getPost = (req, res) => {
         const memes = memesData[2];
 
         const contentData = getData.contentArray;
+        const commentsData = getData.commentsArray;
         const content = contentData.filter(contentData => contentData.id == req.params.id);
+        const comments = commentsData.filter(commentsData => commentsData.id == req.params.id);
         const title = `Analytics | ${content[0].title}`;
-        res.render(createPath('./pages/post'), { title, memes, content });
+        res.render(createPath('./pages/post'), { title, memes, content, comments });
     } catch (error) {
         handleError(res, error);
     }

@@ -1,6 +1,6 @@
 <div class="comments_section">
     <div class="comments_header">
-        <div class="comments_title"> 0 комментариев</div>
+        <div class="comments_title"> <%= comments.length%> комментариев</div>
     </div>
     <div class="comments_form">
         <form class="post_comment">
@@ -9,6 +9,5 @@
     </div>
     <div class="comments_tree">
         <%- include('../partials/comment'); %>
-            <%- include('../partials/comment'); %>
     </div>
 </div>
